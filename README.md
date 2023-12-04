@@ -15,3 +15,9 @@ The project requires
 These scripts are licensed using [GPLv3](http://www.gnu.org/licenses). [SQLite is public domain](https://www.sqlite.org/copyright.html).
 
 See also [SQLite](https://system.data.sqlite.org/index.html/doc/trunk/www/downloads.wiki) and [.NET RID Catalog](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog).
+
+
+Run script:
+	The file package.ps1 is not digitally signed. You cannot run this script on the current system.
+Solution:
+	powershell.exe -executionpolicy bypass -file .\package.ps1
