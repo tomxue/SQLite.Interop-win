@@ -82,10 +82,10 @@ Get-ChildItem -Path "src\SQLite.Interop\src\contrib" -Filter *.c -Recurse | fore
 }
 
 (
-	( "x86","${Env:ProgramFiles}\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars32.bat"),
-	( "x64","${Env:ProgramFiles}\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"),
-	( "arm","${Env:ProgramFiles}\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsamd64_arm.bat"),
-	( "arm64","${Env:ProgramFiles}\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsamd64_arm64.bat")
+	( "x86","${Env:ProgramFiles}\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvars32.bat"),
+	( "x64","${Env:ProgramFiles}\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvars64.bat"),
+	# ( "arm","${Env:ProgramFiles}\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsamd64_arm.bat"),
+	( "arm64","${Env:ProgramFiles}\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsamd64_arm64.bat")
 ) | foreach {
 	$ARCH = $_[0]
 	$VCVARS = $_[1]
