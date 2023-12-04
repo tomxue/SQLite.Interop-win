@@ -17,7 +17,20 @@ These scripts are licensed using [GPLv3](http://www.gnu.org/licenses). [SQLite i
 See also [SQLite](https://system.data.sqlite.org/index.html/doc/trunk/www/downloads.wiki) and [.NET RID Catalog](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog).
 
 
+
 Run script:
 	The file package.ps1 is not digitally signed. You cannot run this script on the current system.
+	
 Solution:
 	powershell.exe -executionpolicy bypass -file .\package.ps1
+	
+	
+	
+Compile issue:
+	SQLite.Interop-win\src\SQLite.Interop\src\generic\../contrib/extension-functions.c(147): error C2371: 'int16_t': redefinition; different basic types
+	C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.38.33130\include\stdint.h(19): note: see declaration of 'int16_t'
+	SQLite.Interop-win\src\SQLite.Interop\src\generic\../contrib/extension-functions.c(148): error C2371: 'uint16_t': redefinition; different basic types
+	C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.38.33130\include\stdint.h(23): note: see declaration of 'uint16_t'
+	
+Solution:
+	Modify file SQLite.Interop-win\src\SQLite.Interop\src\contrib\extension-functions.c, comment out line 147, 148
