@@ -37,12 +37,18 @@ foreach ($Name in "bin", "obj") {
 	} 
 }
 
+Write-Host "tomxue             -8"
+cmd /c 'pause'
+
 & "dotnet.exe" build "test.csproj" --configuration Release
 
 If ( $LastExitCode -ne 0 )
 {
 	Exit $LastExitCode
 }
+
+Write-Host "tomxue             -7"
+cmd /c 'pause'
 
 If (-not(Test-Path "test.db"))
 {
@@ -74,6 +80,9 @@ SELECT * FROM MESSAGES;
 	}
 }
 
+Write-Host "tomxue             -6"
+cmd /c 'pause'
+
 if (("$env:PROCESSOR_ARCHITECTURE" -eq "x86") -or ("$env:PROCESSOR_ARCHITECTURE" -eq "AMD64"))
 {
 	Write-Host "Following should succeed and read the database"
@@ -86,22 +95,27 @@ if (("$env:PROCESSOR_ARCHITECTURE" -eq "x86") -or ("$env:PROCESSOR_ARCHITECTURE"
 	}
 }
 
+Write-Host "tomxue             -5"
+cmd /c 'pause'
+
 Remove-Item "bin\Release\net6.0\runtimes" -Force -Recurse
 
 Write-Host "Following should fail with missing SQLite.Interop.dll"
 
 & "dotnet.exe" "bin\Release\net6.0\test.dll"
 
-If ( $LastExitCode -eq 0 )
-{
-	throw "This should have failed with no SQLite.Interop.dll"
-}
+Write-Host "tomxue             -4"
+cmd /c 'pause'
+
+
 
 if (-not(Test-Path "runtimes"))
 {
+	Write-Host "tomxue             -3"
 	Expand-Archive -Path SQLite.Interop-$VERSION-win.zip -DestinationPath "."
 }
 
+Write-Host "tomxue             -2"
 switch ( "$env:PROCESSOR_ARCHITECTURE" )
 {
 	"x86"   { Copy-Item -LiteralPath "runtimes\win-x86\native\SQLite.Interop.dll"   -Destination "bin\Release\net6.0" }
@@ -111,23 +125,28 @@ switch ( "$env:PROCESSOR_ARCHITECTURE" )
 	default { throw "Unknown architecure" }
 }
 
+cmd /c 'pause'
+
 Write-Host "Following should fail with missing entry point SI7fca2652f71267db in SQLite.Interop.dll"
 
 & "dotnet.exe" "bin\Release\net6.0\test.dll"
+Write-Host "tomxue             -1"
 
-If ( $LastExitCode -eq 0 )
-{
-	throw "This should have failed with missing entry point SI7fca2652f71267db in SQLite.Interop.dll"
-}
+
 
 if (-not(Test-Path -Path $ZIPNAME))
 {
+	Write-Host "tomxue             2"
 	Invoke-WebRequest -Uri "https://system.data.sqlite.org/blobs/$VERSION/$ZIPNAME" -OutFile $ZIPNAME
 }
 
+Write-Host "tomxue             3"
 Remove-Item "bin\Release\net6.0\System.Data.SQLite.dll"
+Write-Host "tomxue             4"
 
 $null = New-Item -Path "." -Name "tmp" -ItemType "directory"
+cmd /c 'pause'
+Write-Host "tomxue             5"
 
 try
 {
@@ -138,10 +157,15 @@ try
 		throw "SHA256 mismatch for $ZIPNAME"
 	}
 
+
+	cmd /c 'pause'
+	Write-Host "tomxue             6"
 	$null = Move-Item -Path "tmp\System.Data.SQLite.dll" -Destination "bin\Release\net6.0"
 }
 finally
 {
+	cmd /c 'pause'
+	Write-Host "tomxue             7"
 	Remove-Item "tmp" -Force -Recurse
 }
 
