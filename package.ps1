@@ -52,6 +52,12 @@ if (-not(Test-Path -Path "src"))
 	Expand-Archive -Path $ZIPNAME -DestinationPath "src"
 }
 
+# added by tomxue
+Copy-Item -Path "src\SQLite.Interop\src\contrib\extension-functions.c" -Destination ".\"
+$filePath = ".\extension-functions.c"
+(Get-Content $filePath).Replace("typedef signed int int16_t;","// typedef signed int int16_t;") | Set-Content $filePath
+(Get-Content $filePath).Replace("typedef unsigned int uint16_t;","// typedef unsigned int uint16_t;") | Set-Content $filePath
+
 $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
 
 Get-ChildItem -Path "src\SQLite.Interop\src\contrib" -Filter *.c -Recurse | foreach {
@@ -80,6 +86,11 @@ Get-ChildItem -Path "src\SQLite.Interop\src\contrib" -Filter *.c -Recurse | fore
 		[System.IO.File]::WriteAllText($FileName, $Content, $Utf8NoBomEncoding)
 	}
 }
+
+# added by tomxue
+$filePath = ".\src\SQLite.Interop\src\contrib\extension-functions.c"
+(Get-Content $filePath).Replace("typedef signed int int16_t;","// typedef signed int int16_t;") | Set-Content $filePath
+(Get-Content $filePath).Replace("typedef unsigned int uint16_t;","// typedef unsigned int uint16_t;") | Set-Content $filePath
 
 (
 	( "x86","${Env:ProgramFiles}\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvars32.bat"),
